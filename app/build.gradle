@@ -69,7 +69,7 @@ android {
 
     //渠道Flavors，我这里写了一些常用的
     productFlavors {
-        commonsoon {
+        xiaomi {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "commonsoon"]
         }
         zhushou91 {
@@ -92,10 +92,13 @@ android {
             def outDirectory = oldFile.parent
 
             if ("true".equals(IS_JENKINS)) {
-                timeNow = JENKINS_TIME
-                outDirectory = 'G:/Tomcat/webapps/jenkins/apk'
-                newName = 'yj-android-v' +
-                        APP_VERSION + '-' + variant.productFlavors[0].name + timeNow + '-' + variant.buildType.name + '.apk'
+                timeNow = getDate()
+                if (variant.buildType.name.equals('debug')) {
+                    newName = "yj-android-v${APP_VERSION}-debug.apk"
+                } else {
+                    newName = 'yj-android-v' +
+                            APP_VERSION + '-' + variant.productFlavors[0].name + timeNow + '-' + variant.buildType.name + '.apk'
+                }
             } else {
                 timeNow = getDate()
                 if (variant.buildType.name.equals('debug')) {
