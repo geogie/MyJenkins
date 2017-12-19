@@ -45,6 +45,15 @@ android {
         }
     }
 
+    productFlavors {
+        xiaomi {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "commonsoon"]
+        }
+        vivo {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "zhushou91"]
+        }
+    }
+
     dexOptions {
         javaMaxHeapSize "2g"
     }
