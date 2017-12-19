@@ -35,24 +35,114 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
+            buildConfigField "boolean", "ONLINE", "true"
+            buildConfigField "String", "CHANNEL", "\"debugOnLine-xiaomi\""
         }
+
         release {
             minifyEnabled true
             zipAlignEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+            buildConfigField "boolean", "ONLINE", "true"
+            buildConfigField "String", "CHANNEL", "\"releaseOnLine-xiaomi\""
         }
+
+//        debugOnline {
+//            minifyEnabled true
+//            zipAlignEnabled true
+//            shrinkResources true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            signingConfig signingConfigs.debug
+//            buildConfigField "boolean", "ONLINE", "true"
+//            buildConfigField "String", "CHANNEL", "\"debugOnLine-xiaomi\""
+//        }
+
+        releaseOnline {
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            buildConfigField "boolean", "ONLINE", "true"
+            buildConfigField "String", "CHANNEL", "\"releaseOnLine-xiaomi\""
+        }
+
+//        debugOffline {
+//            minifyEnabled true
+//            zipAlignEnabled true
+//            shrinkResources true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            signingConfig signingConfigs.debug
+//            buildConfigField "boolean", "ONLINE", "false"
+//            buildConfigField "String", "CHANNEL", "\"debugOffline-xiaomi\""
+//        }
+        releaseOffline {
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            buildConfigField "boolean", "ONLINE", "false"
+            buildConfigField "String", "CHANNEL", "\"releaseOffline-xiaomi\""
+        }
+
+
     }
 
-    productFlavors {
-        xiaomi {
-            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "commonsoon"]
-        }
-        vivo {
-            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "zhushou91"]
-        }
-    }
+//    productFlavors {
+//        s360 {
+//            manifestPlaceholders = [
+//                    MTA_APPKEY   : "AYFNRN671S3U",
+//                    MTA_CHANNEL  : "360",
+//                    XG_ACCESS_ID : "2100264931",
+//                    XG_ACCESS_KEY: "ANT2498KIN5E",
+//                    UMENG_CHANNEL: "360"]
+//        }
+//
+//        baidu {
+//            manifestPlaceholders = [
+//                    MTA_APPKEY   : "AYFNRN671S3U",
+//                    MTA_CHANNEL  : "baidu",
+//                    XG_ACCESS_ID : "2100264931",
+//                    XG_ACCESS_KEY: "ANT2498KIN5E",
+//                    UMENG_CHANNEL: "baidu"]
+//        }
+//        oppo {
+//            manifestPlaceholders = [
+//                    MTA_APPKEY   : "AYFNRN671S3U",
+//                    MTA_CHANNEL  : "oppo",
+//                    XG_ACCESS_ID : "2100264931",
+//                    XG_ACCESS_KEY: "ANT2498KIN5E",
+//                    UMENG_CHANNEL: "oppo"]
+//        }
+//
+//        yingyongbao {
+//            manifestPlaceholders = [
+//                    MTA_APPKEY   : "AYFNRN671S3U",
+//                    MTA_CHANNEL  : "yingyongbao",
+//                    XG_ACCESS_ID : "2100264931",
+//                    XG_ACCESS_KEY: "ANT2498KIN5E",
+//                    UMENG_CHANNEL: "yingyongbao"]
+//        }
+//        xiaomi {
+//            manifestPlaceholders = [
+//                    MTA_APPKEY   : "AYFNRN671S3U",
+//                    MTA_CHANNEL  : "xiaomi",
+//                    XG_ACCESS_ID : "2100264931",
+//                    XG_ACCESS_KEY: "ANT2498KIN5E",
+//                    UMENG_CHANNEL: "xiaomi"]
+//        }
+//        vivo {
+//            manifestPlaceholders = [
+//                    MTA_APPKEY   : "AYFNRN671S3U",
+//                    MTA_CHANNEL  : "vivo",
+//                    XG_ACCESS_ID : "2100264931",
+//                    XG_ACCESS_KEY: "ANT2498KIN5E",
+//                    UMENG_CHANNEL: "vivo"]
+//        }
+//    }
 
     dexOptions {
         javaMaxHeapSize "2g"
