@@ -14,11 +14,34 @@ android {
     }
 
     signingConfigs {
-        signingConfig {
+        release {
             storeFile file(KEYSTORE_FILE)
             storePassword KEYSTORE_PASSWORD
             keyAlias KEY_ALIAS
             keyPassword KEY_PASSWORD
+        }
+        debug {
+            storeFile file(KEYSTORE_FILE)
+            storePassword KEYSTORE_PASSWORD
+            keyAlias KEY_ALIAS
+            keyPassword KEY_PASSWORD
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+        release {
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 
@@ -34,7 +57,7 @@ android {
     }
 
 
-    lintOptions{
+    lintOptions {
         abortOnError false
     }
 }
