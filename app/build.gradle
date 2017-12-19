@@ -61,15 +61,6 @@ android {
         javaMaxHeapSize "2g"
     }
 
-    //渠道Flavors，我这里写了一些常用的
-    productFlavors {
-        xiaomi {
-            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "commonsoon"]
-        }
-        zhushou91 {
-            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "zhushou91"]
-        }
-    }
     allprojects {
         repositories {
             mavenCentral()
