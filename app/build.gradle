@@ -1,11 +1,5 @@
 apply plugin: 'com.android.application'
 
-def getDate() {
-    def date = new Date()
-    def formattedDate = date.format('yyyyMMddHHmm')
-    return formattedDate
-}
-def verCode = 14
 
 android {
     compileSdkVersion 23
@@ -33,7 +27,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 22
         multiDexEnabled true
-        versionCode verCode
+        versionCode 1
         versionName APP_VERSION
         resValue("string", 'app_version', APP_VERSION)
         buildConfigField "boolean", "LEO_DEBUG", "true"
@@ -83,36 +77,6 @@ android {
         }
     }
 
-    //修改生成的apk名字
-    applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            def newName
-            def timeNow
-            def oldFile = output.outputFile
-            def outDirectory = oldFile.parent
-
-            if ("true".equals(IS_JENKINS)) {
-                timeNow = getDate()
-                if (variant.buildType.name.equals('debug')) {
-                    newName = "yj-android-v${APP_VERSION}-debug.apk"
-                } else {
-                    newName = 'yj-android-v' +
-                            APP_VERSION + '-' + variant.productFlavors[0].name + timeNow + '-' + variant.buildType.name + '.apk'
-                }
-            } else {
-                timeNow = getDate()
-                if (variant.buildType.name.equals('debug')) {
-                    newName = "yj-android-v${APP_VERSION}-debug.apk"
-                } else {
-                    newName = 'yj-android-v' +
-                            APP_VERSION + '-' + variant.productFlavors[0].name + timeNow + '-' + variant.buildType.name + '.apk'
-                }
-            }
-
-            output.outputFile = new File(outDirectory, newName)
-
-        }
-    }
 
     lintOptions{
         abortOnError false
