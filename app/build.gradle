@@ -1,5 +1,22 @@
 apply plugin: 'com.android.application'
 
+def getDate() {
+    def date = new Date()
+    def formattedDate = date.format('yyyyMMddHHmm')
+    return formattedDate
+}
+
+def getDateYMD() {
+    def date = new Date()
+    def formattedDate = date.format('yyyyMMdd')
+    return formattedDate
+}
+
+def getDateHM() {
+    def date = new Date()
+    def formattedDate = date.format('HHmm')
+    return formattedDate
+}
 
 android {
     compileSdkVersion 23
@@ -9,7 +26,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName APP_VERSION
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -91,58 +108,65 @@ android {
 
     }
 
-//    productFlavors {
-//        s360 {
+    productFlavors {
+        t360 {
 //            manifestPlaceholders = [
 //                    MTA_APPKEY   : "AYFNRN671S3U",
-//                    MTA_CHANNEL  : "360",
+//                    MTA_CHANNEL  : "t360",
 //                    XG_ACCESS_ID : "2100264931",
 //                    XG_ACCESS_KEY: "ANT2498KIN5E",
-//                    UMENG_CHANNEL: "360"]
-//        }
-//
-//        baidu {
+//                    UMENG_CHANNEL: "t360"]
+        }
+
+        baidu {
 //            manifestPlaceholders = [
 //                    MTA_APPKEY   : "AYFNRN671S3U",
 //                    MTA_CHANNEL  : "baidu",
 //                    XG_ACCESS_ID : "2100264931",
 //                    XG_ACCESS_KEY: "ANT2498KIN5E",
 //                    UMENG_CHANNEL: "baidu"]
-//        }
-//        oppo {
-//            manifestPlaceholders = [
-//                    MTA_APPKEY   : "AYFNRN671S3U",
-//                    MTA_CHANNEL  : "oppo",
-//                    XG_ACCESS_ID : "2100264931",
-//                    XG_ACCESS_KEY: "ANT2498KIN5E",
-//                    UMENG_CHANNEL: "oppo"]
-//        }
-//
-//        yingyongbao {
+        }
+        oppo {
+            manifestPlaceholders = [
+                    MTA_APPKEY   : "AYFNRN671S3U",
+                    MTA_CHANNEL  : "oppo",
+                    XG_ACCESS_ID : "2100264931",
+                    XG_ACCESS_KEY: "ANT2498KIN5E",
+                    UMENG_CHANNEL: "oppo"]
+        }
+
+        yingyongbao {
 //            manifestPlaceholders = [
 //                    MTA_APPKEY   : "AYFNRN671S3U",
 //                    MTA_CHANNEL  : "yingyongbao",
 //                    XG_ACCESS_ID : "2100264931",
 //                    XG_ACCESS_KEY: "ANT2498KIN5E",
 //                    UMENG_CHANNEL: "yingyongbao"]
-//        }
-//        xiaomi {
+        }
+        xiaomi {
 //            manifestPlaceholders = [
 //                    MTA_APPKEY   : "AYFNRN671S3U",
 //                    MTA_CHANNEL  : "xiaomi",
 //                    XG_ACCESS_ID : "2100264931",
 //                    XG_ACCESS_KEY: "ANT2498KIN5E",
 //                    UMENG_CHANNEL: "xiaomi"]
-//        }
-//        vivo {
+        }
+        vivo {
 //            manifestPlaceholders = [
 //                    MTA_APPKEY   : "AYFNRN671S3U",
 //                    MTA_CHANNEL  : "vivo",
 //                    XG_ACCESS_ID : "2100264931",
 //                    XG_ACCESS_KEY: "ANT2498KIN5E",
 //                    UMENG_CHANNEL: "vivo"]
-//        }
-//    }
+        }
+    }
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [MTA_APPKEY   : "AYFNRN671S3U",
+                                                 MTA_CHANNEL  : name,
+                                                 XG_ACCESS_ID : "2100264931",
+                                                 XG_ACCESS_KEY: "ANT2498KIN5E",
+                                                 UMENG_CHANNEL: name]
+    }
 
     dexOptions {
         javaMaxHeapSize "2g"
