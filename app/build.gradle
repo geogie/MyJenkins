@@ -110,61 +110,31 @@ android {
 
     productFlavors {
         t360 {
-//            manifestPlaceholders = [
-//                    MTA_APPKEY   : "AYFNRN671S3U",
-//                    MTA_CHANNEL  : "t360",
-//                    XG_ACCESS_ID : "2100264931",
-//                    XG_ACCESS_KEY: "ANT2498KIN5E",
-//                    UMENG_CHANNEL: "t360"]
         }
 
         baidu {
-//            manifestPlaceholders = [
-//                    MTA_APPKEY   : "AYFNRN671S3U",
-//                    MTA_CHANNEL  : "baidu",
-//                    XG_ACCESS_ID : "2100264931",
-//                    XG_ACCESS_KEY: "ANT2498KIN5E",
-//                    UMENG_CHANNEL: "baidu"]
         }
         oppo {
             manifestPlaceholders = [
-                    MTA_APPKEY   : "AYFNRN671S3U",
+                    MTA_APPKEY   : "xx",
                     MTA_CHANNEL  : "oppo",
-                    XG_ACCESS_ID : "2100264931",
-                    XG_ACCESS_KEY: "ANT2498KIN5E",
+                    XG_ACCESS_ID : "xx",
+                    XG_ACCESS_KEY: "xx",
                     UMENG_CHANNEL: "oppo"]
         }
 
         yingyongbao {
-//            manifestPlaceholders = [
-//                    MTA_APPKEY   : "AYFNRN671S3U",
-//                    MTA_CHANNEL  : "yingyongbao",
-//                    XG_ACCESS_ID : "2100264931",
-//                    XG_ACCESS_KEY: "ANT2498KIN5E",
-//                    UMENG_CHANNEL: "yingyongbao"]
         }
         xiaomi {
-//            manifestPlaceholders = [
-//                    MTA_APPKEY   : "AYFNRN671S3U",
-//                    MTA_CHANNEL  : "xiaomi",
-//                    XG_ACCESS_ID : "2100264931",
-//                    XG_ACCESS_KEY: "ANT2498KIN5E",
-//                    UMENG_CHANNEL: "xiaomi"]
         }
         vivo {
-//            manifestPlaceholders = [
-//                    MTA_APPKEY   : "AYFNRN671S3U",
-//                    MTA_CHANNEL  : "vivo",
-//                    XG_ACCESS_ID : "2100264931",
-//                    XG_ACCESS_KEY: "ANT2498KIN5E",
-//                    UMENG_CHANNEL: "vivo"]
         }
     }
     productFlavors.all {
-        flavor -> flavor.manifestPlaceholders = [MTA_APPKEY   : "AYFNRN671S3U",
+        flavor -> flavor.manifestPlaceholders = [MTA_APPKEY   : "xx",
                                                  MTA_CHANNEL  : name,
-                                                 XG_ACCESS_ID : "2100264931",
-                                                 XG_ACCESS_KEY: "ANT2498KIN5E",
+                                                 XG_ACCESS_ID : "xx",
+                                                 XG_ACCESS_KEY: "xx",
                                                  UMENG_CHANNEL: name]
     }
 
