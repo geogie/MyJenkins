@@ -78,75 +78,8 @@ android {
                     jpush_appkey : "oppo"]
         }
 
-//        debugOnline {
-//            minifyEnabled true
-//            zipAlignEnabled true
-//            shrinkResources true
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            signingConfig signingConfigs.debug
-//            buildConfigField "boolean", "ONLINE", "true"
-//            buildConfigField "String", "CHANNEL", "\"debugOnLine-xiaomi\""
-//        }
-
-//        releaseOnline {
-//            minifyEnabled true
-//            zipAlignEnabled true
-//            shrinkResources true
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            signingConfig signingConfigs.release
-//            buildConfigField "boolean", "ONLINE", "true"
-//            buildConfigField "String", "CHANNEL", "\"releaseOnLine-xiaomi\""
-//        }
-
-//        debugOffline {
-//            minifyEnabled true
-//            zipAlignEnabled true
-//            shrinkResources true
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            signingConfig signingConfigs.debug
-//            buildConfigField "boolean", "ONLINE", "false"
-//            buildConfigField "String", "CHANNEL", "\"debugOffline-xiaomi\""
-//        }
-//        releaseOffline {
-//            minifyEnabled true
-//            zipAlignEnabled true
-//            shrinkResources true
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            signingConfig signingConfigs.release
-//            buildConfigField "boolean", "ONLINE", "false"
-//            buildConfigField "String", "CHANNEL", "\"releaseOffline-xiaomi\""
-//        }
-
 
     }
-
-//    productFlavors {
-//        t360 {
-//        }
-//        baidu {
-//        }
-//        oppo {
-//            manifestPlaceholders = [
-//                    MTA_APPKEY   : "xx",
-//                    MTA_CHANNEL  : "oppo",
-//                    XG_ACCESS_ID : "xx",
-//                    XG_ACCESS_KEY: "xx",
-//                    UMENG_CHANNEL: "oppo"]
-//        }
-//        yingyongbao {
-//        }
-//        xiaomi {
-//        }
-//        vivo {
-//        }
-//    }
-//    productFlavors.all {
-//        flavor -> flavor.manifestPlaceholders = [MTA_APPKEY   : "xx",
-//                                                 MTA_CHANNEL  : name,
-//                                                 XG_ACCESS_ID : "xx",
-//                                                 XG_ACCESS_KEY: "xx",
-//                                                 UMENG_CHANNEL: name]
-//    }
 
     afterEvaluate {
         android.applicationVariants.all { variant ->
@@ -177,7 +110,30 @@ android {
     lintOptions {
         abortOnError false
     }
+
+
+//修改生成的apk名字及输出文件夹
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            //新名字
+            def newName
+            //时间戳
+            def timeNow
+            //输出文件夹
+            def outDirectory
+            //是否为Jenkins打包，输出路径不同
+            if ("true".equals(IS_JENKINS)) {
+                newName = APPNAME + "-v" + APP_VERSION + '-jenkins' + '.apk'
+            } else {
+                //本机打包输出在本机路径
+                newName = APPNAME + "-v" + APP_VERSION + '-' + '.apk'
+            }
+            output.outputFile = new File(output.outputFile.parent, newName)
+        }
+    }
 }
+
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
