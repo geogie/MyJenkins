@@ -1,14 +1,13 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    
+
     repositories {
         jcenter()
         mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.2'
-        
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -19,6 +18,22 @@ allprojects {
     repositories {
         jcenter()
     }
+}
+
+ext {
+    compileSdkVersion = 23
+    buildToolsVersion = '25.0.2'
+//    buildToolsVersion = '26.0.2'
+    minSdkVersion = 18
+    targetSdkVersion = 23
+//    versionCode = 20171222
+//    online = "false" // 线下
+    versionName = "2.1.9"// 开发阶段修改第三位，发布修改第二位，重大修改发布修改第一位
+    online = "true" // 线上
+
+    channel = "vivo"
+    isRelease = true
+
 }
 
 task clean(type: Delete) {

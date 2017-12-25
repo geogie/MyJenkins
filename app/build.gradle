@@ -1,21 +1,15 @@
 apply plugin: 'com.android.application'
 
-def getDate() {
-    def date = new Date()
-    def formattedDate = date.format('yyyyMMddHHmm')
-    return formattedDate
+def getVersionCode2() {
+    Integer.parseInt(new Date().format("yyyyMMdd"))
 }
 
-def getDateYMD() {
-    def date = new Date()
-    def formattedDate = date.format('yyyyMMdd')
-    return formattedDate
-}
-
-def getDateHM() {
-    def date = new Date()
-    def formattedDate = date.format('HHmm')
-    return formattedDate
+def getVersionName2() {
+    if (rootProject.ext.isRelease) {
+        APP_VERSION + "(" + getVersionCode2() + ")"
+    } else {
+        APP_VERSION + "(test" + getVersionCode2() + ")"
+    }
 }
 
 android {
@@ -25,9 +19,15 @@ android {
         applicationId "com.georgeren.myjenkins"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 1
-        versionName APP_VERSION
+        versionCode getVersionCode2()
+        versionName getVersionName2()
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [
+                MTA_APPKEY   : "mtakey",
+                MTA_CHANNEL  : "mtachannel",
+                XG_ACCESS_ID : "xgid",
+                XG_ACCESS_KEY: "xgkey",
+                jpush_appkey : "oppo"]
     }
 
     signingConfigs {
@@ -47,23 +47,35 @@ android {
 
     buildTypes {
         debug {
-            minifyEnabled true
-            zipAlignEnabled true
-            shrinkResources true
+//            minifyEnabled true
+//            zipAlignEnabled true
+//            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
             buildConfigField "boolean", "ONLINE", "true"
             buildConfigField "String", "CHANNEL", "\"debugOnLine-xiaomi\""
+            manifestPlaceholders = [
+                    MTA_APPKEY   : "mtakey",
+                    MTA_CHANNEL  : "mtachannel",
+                    XG_ACCESS_ID : "xgid",
+                    XG_ACCESS_KEY: "xgkey",
+                    jpush_appkey : "oppo"]
         }
 
         release {
-            minifyEnabled true
-            zipAlignEnabled true
-            shrinkResources true
+//            minifyEnabled true
+//            zipAlignEnabled true
+//            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
             buildConfigField "boolean", "ONLINE", "true"
             buildConfigField "String", "CHANNEL", "\"releaseOnLine-xiaomi\""
+            manifestPlaceholders = [
+                    MTA_APPKEY   : "mtakey",
+                    "MTA_CHANNEL": "mtachannel",
+                    XG_ACCESS_ID : "xgid",
+                    XG_ACCESS_KEY: "xgkey",
+                    jpush_appkey : "oppo"]
         }
 
 //        debugOnline {
@@ -76,15 +88,15 @@ android {
 //            buildConfigField "String", "CHANNEL", "\"debugOnLine-xiaomi\""
 //        }
 
-        releaseOnline {
-            minifyEnabled true
-            zipAlignEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
-            buildConfigField "boolean", "ONLINE", "true"
-            buildConfigField "String", "CHANNEL", "\"releaseOnLine-xiaomi\""
-        }
+//        releaseOnline {
+//            minifyEnabled true
+//            zipAlignEnabled true
+//            shrinkResources true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            signingConfig signingConfigs.release
+//            buildConfigField "boolean", "ONLINE", "true"
+//            buildConfigField "String", "CHANNEL", "\"releaseOnLine-xiaomi\""
+//        }
 
 //        debugOffline {
 //            minifyEnabled true
@@ -95,47 +107,59 @@ android {
 //            buildConfigField "boolean", "ONLINE", "false"
 //            buildConfigField "String", "CHANNEL", "\"debugOffline-xiaomi\""
 //        }
-        releaseOffline {
-            minifyEnabled true
-            zipAlignEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
-            buildConfigField "boolean", "ONLINE", "false"
-            buildConfigField "String", "CHANNEL", "\"releaseOffline-xiaomi\""
-        }
+//        releaseOffline {
+//            minifyEnabled true
+//            zipAlignEnabled true
+//            shrinkResources true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            signingConfig signingConfigs.release
+//            buildConfigField "boolean", "ONLINE", "false"
+//            buildConfigField "String", "CHANNEL", "\"releaseOffline-xiaomi\""
+//        }
 
 
     }
 
-    productFlavors {
-        t360 {
-        }
+//    productFlavors {
+//        t360 {
+//        }
+//        baidu {
+//        }
+//        oppo {
+//            manifestPlaceholders = [
+//                    MTA_APPKEY   : "xx",
+//                    MTA_CHANNEL  : "oppo",
+//                    XG_ACCESS_ID : "xx",
+//                    XG_ACCESS_KEY: "xx",
+//                    UMENG_CHANNEL: "oppo"]
+//        }
+//        yingyongbao {
+//        }
+//        xiaomi {
+//        }
+//        vivo {
+//        }
+//    }
+//    productFlavors.all {
+//        flavor -> flavor.manifestPlaceholders = [MTA_APPKEY   : "xx",
+//                                                 MTA_CHANNEL  : name,
+//                                                 XG_ACCESS_ID : "xx",
+//                                                 XG_ACCESS_KEY: "xx",
+//                                                 UMENG_CHANNEL: name]
+//    }
 
-        baidu {
+    afterEvaluate {
+        android.applicationVariants.all { variant ->
+            variant.assemble.doLast {
+                if (variant.buildType.name.contains('release')) {
+                    def apkPath = variant.outputs.get(0).outputFile as File
+                    exec {
+                        ignoreExitValue true
+                        commandLine "sh", "../jiagu/jiagu_360.sh", apkPath, apkPath.getParent()
+                    }
+                }
+            }
         }
-        oppo {
-            manifestPlaceholders = [
-                    MTA_APPKEY   : "xx",
-                    MTA_CHANNEL  : "oppo",
-                    XG_ACCESS_ID : "xx",
-                    XG_ACCESS_KEY: "xx",
-                    UMENG_CHANNEL: "oppo"]
-        }
-
-        yingyongbao {
-        }
-        xiaomi {
-        }
-        vivo {
-        }
-    }
-    productFlavors.all {
-        flavor -> flavor.manifestPlaceholders = [MTA_APPKEY   : "xx",
-                                                 MTA_CHANNEL  : name,
-                                                 XG_ACCESS_ID : "xx",
-                                                 XG_ACCESS_KEY: "xx",
-                                                 UMENG_CHANNEL: name]
     }
 
     dexOptions {
